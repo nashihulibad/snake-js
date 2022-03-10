@@ -83,13 +83,6 @@ let appleHealth = {
   },
 };
 
-let snakeThorn = {
-  color: "black",
-  position: initPosition(),
-  direction: initDirection(),
-  move: 300,
-};
-
 function getStarted() {
   snake1.score = 0;
   level = 1;
