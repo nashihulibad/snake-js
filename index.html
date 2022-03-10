@@ -2,14 +2,14 @@
   <head>
     <title>Snake Game</title>
   </head>
-  <script type="text/javascript" src="demo.js"></script>
+  <script type="text/javascript" src="script.js"></script>
   <body onload="draw();">
     <img
       id="apple"
       style="display: none"
       width="20"
       height="20"
-      src="apple.jpg"
+      src="assets/apple.jpg"
       alt=""
     />
     <img
@@ -17,7 +17,7 @@
       style="display: none"
       width="20"
       height="20"
-      src="health.png"
+      src="assets/health.png"
       alt=""
     />
     <img
@@ -25,45 +25,48 @@
       style="display: none"
       width="20"
       height="20"
-      src="snake.jpg"
+      src="assets/snake.jpg"
       alt=""
     />
-    <img
-      id="thorn"
-      style="display: none"
-      width="20"
-      height="20"
-      src="thorn.png"
-      alt=""
-    />
+
     <div>
-      <button style="background: purple" onclick="play();">Play</button>
+      <button style="background: rgb(189, 175, 189)" onclick="play();">
+        Play
+      </button>
+      <br /><br />
     </div>
     <canvas
       id="snakeBoard"
       width="600"
       height="600"
-      style="border: 1px solid #000000"
+      style="border: 2px solid #383636"
     ></canvas>
     <canvas
       id="score1Board"
-      width="100"
-      height="100"
-      style="border: 1px solid #000000"
+      width="120"
+      height="120"
+      style="border: 3px solid #383636"
     >
     </canvas>
     <canvas
       id="health"
-      width="100"
-      height="100"
-      style="border: 1px solid #000000"
+      width="120"
+      height="120"
+      style="border: 3px solid #383636"
     >
     </canvas>
     <canvas
       id="levelBoard"
-      width="100"
-      height="100"
-      style="border: 1px solid #000000"
+      width="120"
+      height="120"
+      style="border: 3px solid #383636"
+    >
+    </canvas>
+    <canvas
+      id="fastBoard"
+      width="120"
+      height="120"
+      style="border: 3px solid #383636"
     >
     </canvas>
   </body>
