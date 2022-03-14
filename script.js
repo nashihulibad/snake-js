@@ -54,6 +54,7 @@ var isPlay = 0;
 var upLevel = 0;
 var overAudio = new Audio("assets/over.wav");
 var levelAudio = new Audio("assets/level.wav");
+var gameOverAudio = new Audio("assets/game-over.mp3");
 
 let snake1 = {
   color: "orange",
@@ -81,6 +82,11 @@ let appleHealth = {
     x: -1,
     y: -1,
   },
+};
+
+let thorn = {
+  color: "black",
+  position: initPosition(),
 };
 
 function getStarted() {
@@ -146,6 +152,8 @@ function hitTheWall(snake) {
       ) {
         overAudio.play();
         if (snake.health === 0) {
+          gameOverAudio.play();
+          alert("Game over");
           getStarted();
         } else {
           snake.health--;
@@ -164,6 +172,8 @@ function hitTheWall(snake) {
       ) {
         overAudio.play();
         if (snake.health === 0) {
+          gameOverAudio.play();
+          alert("Game over");
           getStarted();
         } else {
           snake.health--;
@@ -257,9 +267,10 @@ function draw() {
       CELL_SIZE,
       CELL_SIZE
     );
-    for (let i = 1; i < snake1.score; i++) {
+    let snakeBody = document.getElementById("snakeBody");
+    for (let i = 1; i <= snake1.score; i++) {
       ctx.drawImage(
-        snake,
+        snakeBody,
         snake1.body[i].x * CELL_SIZE,
         snake1.body[i].y * CELL_SIZE,
         CELL_SIZE,
@@ -268,6 +279,7 @@ function draw() {
     }
 
     let apple = document.getElementById("apple");
+    let appleBlue = document.getElementById("appleBlue");
     ctx.drawImage(
       apple,
       apple1.position.x * CELL_SIZE,
@@ -277,7 +289,7 @@ function draw() {
     );
 
     ctx.drawImage(
-      apple,
+      appleBlue,
       apple2.position.x * CELL_SIZE,
       apple2.position.y * CELL_SIZE,
       CELL_SIZE,
@@ -289,6 +301,15 @@ function draw() {
       health,
       appleHealth.position.x * CELL_SIZE,
       appleHealth.position.y * CELL_SIZE,
+      CELL_SIZE,
+      CELL_SIZE
+    );
+
+    let thornImg = document.getElementById("thorn");
+    ctx.drawImage(
+      thornImg,
+      thorn.position.x * CELL_SIZE,
+      thorn.position.y * CELL_SIZE,
       CELL_SIZE,
       CELL_SIZE
     );
@@ -360,9 +381,10 @@ function eat(snake) {
     snake.position.y == apple2.position.y
   ) {
     apple2.position = initPosition();
+
     snake.score++;
     snake.body.push({ x: snake.position.x, y: snake.position.y });
-
+    snake.position = initPosition();
     if (snake.score === 25) {
       levelAudio.play();
       isWin = 1;
@@ -406,6 +428,22 @@ function eat(snake) {
     if (isPrime(snake.score) === true) {
       appleHealth.position = initPosition();
     }
+  }
+
+  if (
+    snake.position.x == thorn.position.x &&
+    snake.position.y == thorn.position.y
+  ) {
+    overAudio.play();
+    if (snake.health === 0) {
+      gameOverAudio.play();
+      alert("Game over");
+      getStarted();
+    } else {
+      snake.health--;
+    }
+    stop(snake);
+    changeThornPosition();
   }
 }
 
@@ -490,6 +528,12 @@ function moveBody(snake) {
   snake.body.pop();
 }
 
+function changeThornPosition() {
+  setInterval(function () {
+    thorn.position = initPosition();
+  }, 4000);
+}
+
 document.addEventListener("keydown", function (event) {
   if (event.key === "ArrowLeft") {
     snake1.direction = DIRECTION.LEFT;
@@ -505,7 +549,12 @@ document.addEventListener("keydown", function (event) {
 function play() {
   if (isPlay == 1) {
     return;
+
+  }
+  if (snake1.health !== 0) {
+    changeThornPosition();
   }
   isPlay = 1;
   move(snake1);
+
 }
