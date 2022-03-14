@@ -549,12 +549,10 @@ document.addEventListener("keydown", function (event) {
 function play() {
   if (isPlay == 1) {
     return;
-
   }
   if (snake1.health !== 0) {
     changeThornPosition();
   }
   isPlay = 1;
   move(snake1);
-
 }
